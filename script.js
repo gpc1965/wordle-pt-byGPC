@@ -2,7 +2,6 @@ let words = [];
 let secret = "";
 let row = 0;
 let col = 0;
-let board = [];
 const maxRows = 6;
 
 async function loadWords() {
@@ -15,13 +14,12 @@ async function loadWords() {
 
 function createBoard() {
     const boardDiv = document.getElementById("board");
+
     for (let r = 0; r < maxRows; r++) {
-        board[r] = [];
         for (let c = 0; c < 5; c++) {
             const tile = document.createElement("div");
             tile.classList.add("tile");
             tile.id = `tile-${r}-${c}`;
-            board[r][c] = tile;
             boardDiv.appendChild(tile);
         }
     }
@@ -54,7 +52,8 @@ function createKeyboard() {
 
 function pressKey(letter) {
     if (col < 5) {
-        board[row][col].textContent = letter;
+        const tile = document.getElementById(`tile-${row}-${col}`);
+        tile.textContent = letter;
         col++;
     }
 }
@@ -62,21 +61,27 @@ function pressKey(letter) {
 function deleteKey() {
     if (col > 0) {
         col--;
-        board[row][col].textContent = "";
+        const tile = document.getElementById(`tile-${row}-${col}`);
+        tile.textContent = "";
     }
 }
 
 function submitWord() {
     if (col < 5) return;
 
-    const guess = board[row].map(t => t.textContent.toLowerCase()).join("");
+    const guess = [];
+    for (let c = 0; c < 5; c++) {
+        guess.push(document.getElementById(`tile-${row}-${c}`).textContent.toLowerCase());
+    }
 
-    if (!words.includes(guess)) {
+    const guessWord = guess.join("");
+
+    if (!words.includes(guessWord)) {
         alert("Palavra inválida!");
         return;
     }
 
-    checkGuess(guess);
+    checkGuess(guessWord);
 }
 
 function checkGuess(guess) {
@@ -84,7 +89,7 @@ function checkGuess(guess) {
     const guessArr = guess.split("");
 
     for (let i = 0; i < 5; i++) {
-        const tile = board[row][i];
+        const tile = document.getElementById(`tile-${row}-${i}`);
 
         setTimeout(() => {
             tile.classList.add("flip");
