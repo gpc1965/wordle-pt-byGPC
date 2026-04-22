@@ -3,20 +3,24 @@ let secret = "";
 let row = 0;
 let col = 0;
 const maxRows = 6;
+const wordLength = 5;
 
 async function loadWords() {
-    const response = await fetch("words.txt");
-    const text = await response.text();
-    words = text.split(/\r?\n/).map(w => w.trim().toLowerCase()).filter(w => w.length === 5);
-    secret = words[Math.floor(Math.random() * words.length)];
-    console.log("Palavra secreta:", secret);
+    try {
+        const response = await fetch("words.txt");
+        const text = await response.text();
+        words = text.split(/\r?\n/).map(w => w.trim().toLowerCase()).filter(w => w.length === wordLength);
+        secret = words[Math.floor(Math.random() * words.length)];
+        console.log("Palavra secreta:", secret);
+    } catch (e) {
+        alert("Erro ao carregar palavras.");
+    }
 }
 
 function createBoard() {
     const boardDiv = document.getElementById("board");
-
     for (let r = 0; r < maxRows; r++) {
-        for (let c = 0; c < 5; c++) {
+        for (let c = 0; c < wordLength; c++) {
             const tile = document.createElement("div");
             tile.classList.add("tile");
             tile.id = `tile-${r}-${c}`;
@@ -51,7 +55,7 @@ function createKeyboard() {
 }
 
 function pressKey(letter) {
-    if (col < 5) {
+    if (col < wordLength && row < maxRows) {
         const tile = document.getElementById(`tile-${row}-${col}`);
         tile.textContent = letter;
         col++;
@@ -67,10 +71,10 @@ function deleteKey() {
 }
 
 function submitWord() {
-    if (col < 5) return;
+    if (col < wordLength) return;
 
     const guess = [];
-    for (let c = 0; c < 5; c++) {
+    for (let c = 0; c < wordLength; c++) {
         guess.push(document.getElementById(`tile-${row}-${c}`).textContent.toLowerCase());
     }
 
@@ -88,7 +92,7 @@ function checkGuess(guess) {
     const secretArr = secret.split("");
     const guessArr = guess.split("");
 
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < wordLength; i++) {
         const tile = document.getElementById(`tile-${row}-${i}`);
 
         setTimeout(() => {
