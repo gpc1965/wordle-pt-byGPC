@@ -31,11 +31,18 @@ body {
     align-items: center;
     font-size: 32px;
     font-weight: bold;
-    transition: transform 0.2s;
+    transition: transform 0.2s, background 0.2s;
 }
 
+/* ANIMAÇÃO CORRIGIDA — NÃO DESAPARECE TEXTO */
 .tile.flip {
-    transform: rotateX(90deg);
+    animation: flip 0.3s ease forwards;
+}
+
+@keyframes flip {
+    0%   { transform: rotateX(0deg); }
+    50%  { transform: rotateX(90deg); }
+    100% { transform: rotateX(0deg); }
 }
 
 .correct {
