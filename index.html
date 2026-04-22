@@ -1,29 +1,22 @@
 <!DOCTYPE html>
 <html lang="pt">
 <head>
-  <meta charset="UTF-8" />
-  <title>Wordle PT Online</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="style.css" />
+<meta charset="UTF-8">
+<title>Wordle PT Deluxe</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="game-container">
-    <header>
-      <h1>WORDLE PT</h1>
-    </header>
 
-    <main>
-      <div id="board" class="board"></div>
-      <div id="message" class="message"></div>
-    </main>
+<h1 class="title">WORDLE PT ✨</h1>
 
-    <section id="keyboard" class="keyboard"></section>
-  </div>
+<div id="board"></div>
 
-  <audio id="snd-key" src="https://actions.google.com/sounds/v1/cartoon/wood_plank_flicks.ogg"></audio>
-  <audio id="snd-win" src="https://actions.google.com/sounds/v1/cartoon/clang_and_wobble.ogg"></audio>
-  <audio id="snd-lose" src="https://actions.google.com/sounds/v1/cartoon/metal_thud_and_clang.ogg"></audio>
+<div id="keyboard"></div>
 
-  <script src="script.js"></script>
+<audio id="snd-correct" src="correct.mp3"></audio>
+<audio id="snd-wrong" src="wrong.mp3"></audio>
+<audio id="snd-win" src="win.mp3"></audio>
+
+<script src="script.js"></script>
 </body>
 </html>
